@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html lang="">
+    <head> 
+        <meta http-equiv="Content-Security-Policy" content="default-src &apos;self&apos; data: gap: https://ssl.gstatic.com https://psd2-api.openbankproject.com &apos;unsafe-eval&apos;; style-src &apos;self&apos; &apos;unsafe-inline&apos;; media-src *; img-src * 'self' data: https:;self&apos; data: content:;">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        <!-- jquery mobile css file -->
+        <link rel="stylesheet" type="text/css" href="js/jquery-1.5.0.mobile.min.css" />
+        <!-- main jquery file -->
+        <script type="text/javascript" crossorigin="anonymous"  src="js/jquery-1.11.1.min.js" ></script>
+        <!-- jquery mobile file -->
+        <script type="text/javascript" crossorigin="anonymous"  src="js/jquery-1.5.0.mobile.min.js"></script>
+        <!-- css file for bootstrap elements -->
+        <link rel="stylesheet" crossorigin="anonymous"  type="text/css" href="js/bootstrap-4.2.1/dist/css/bootstrap.min.css">
+        <!-- main css file -->
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <!-- css file for the login view -->
+        <link rel="stylesheet" type="text/css" href="css/login.css">
+
+        <title>Bank Market App</title>
+    </head>
+    <!-- initialising the angular contorller below -->
+    <body  ng-app="app" ng-controller="appController">
+        <div id="login" style="background-color: #0c2cf5;color: white;">  
+            <form class="form-signin">
+                <div class="text-center mb-4">
+                    <h1 class="h3 mb-3 font-weight-normal">BANK MARKET APP</h1>
+                    <img class="mb-4" src="img/bma_logo.png" alt="" width="72" height="72">
+                    <p>Welcome </p>
+                </div>
+          
+                <div class="form-label-group">
+                <!-- email input tag -->
+                    <input type="email" id="email" class="form-control" placeholder="Email address" ng-model="email" ng-blur="autofillPw()" required autofocus>
+                    <span id="email_result"></span>
+                </div>
+          
+                <div class="form-label-group">
+                <!-- password input tag -->
+                    <input type="password" id="password" class="form-control" placeholder="Password" ng-model="password" required>
+                    <span id="password_result"></span>
+                </div>
+          
+                <div class="checkbox mb-3">
+                    <label>
+                  <!-- rmemember me input tag -->
+                    <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                </div>
+                <!-- sign in button -->
+                <button class="btn btn-lg btn-primary btn-block" data-role="none" type="button" id="signIn" ng-click="signIn()">Sign in</button>
+               
+                <div class="alert alert-danger" role="alert" id="msg" >
+                    <span id="message" ng-clock></span>
+                  </div>
+            </form>
+          <!-- end of form  -->
+        </div>
+        <div id="body" ng-cloak>
+            <div data-role="header" style="background-color: #0c2cf5;"></br>
+                <h1 class="h3 mb-2 font-weight-normal" style="color: white;">BANK MARKET APP</h1>
+                <div class="text-center mb-2">
+                    <!-- logo for the app -->
+                    <img class="mb-1" src="img/bma_logo.png" alt="" width="40" height="40">
+                    <div class="mb-2"> <p style="color: #050505;text-shadow: none;">user : {{email}}</p></div>
+                </div>
+               
+            </div>
+
+            <div data-role="tabs">
+                <!-- Navigation bar -->
+                <div data-role="navbar">
+                </div>
+                <!-- main user interface div -->
+                <div data-role="main" class="ui-content">
+                    <div id="one" class="ui-content">
+                        <!-- selected bank logo. Double curly brackets are for referencing variables on the scope  -->
+                        <img   ng-src="{{bank_icon}}"  alt="{{full_name}}" style="width:8%;" />
+                            <div id="deviceready">
+
+                                <div class="ui-field-contain">
+                                    <label for="select-choice-1" class="select ">Banks:</label>
+                                    <!-- Bank drop down to get accounts upon select -->
+                                    <select name="bank_id" id="bank_id" class="bank_id"  data-role="none" ng-model="id" ng-change="getAccountHeldAtBank(id)" data-hide-placeholder-menu-items="false">
+                                        <option value=""> Select Below</option>
+                                    </select>
+                                        
+                                </div>
+
+                                <div class="ui-field-contain">
+                                    <label for="select-choice-1" class="select ">Accounts:</label>
+                                    <!-- accounts drop down with getTransaction function to get them upon select -->
+                                    <select name="account_id" id="account_id"  data-role="none" ng-model="account_id" ng-change="getTransactions(account_id)"  data-hide-placeholder-menu-items="false" 
+                                    ng-cloak>
+                                        <option value=""> Select Below</option>
+                                    </select>
+                                </div>
+                                <!-- heading fir the transactions table -->
+                        <h5 class="text-center">Transaction Table</h5>
+                        <div class="ui-field-contain">
+                            <!-- search field for transactions in the table -->
+                            <label for="select-custom-20">Search:</label>     
+                            <input type="text" name="non" placeholder="Enter Search" ng-model="search" class="form-control ui-icon-search ng-pristine ng-valid ng-empty ng-touched">
+                        </div>
+                        <!-- beginning of the table -->
+                        <table data-role="table" data-mode="columntoggle" id="account-table" class="ui-responsive table-stripe show-page-loading-msg ui-btn-hidden" data-textonly="false"
+                         data-textvisible="false" data-msgtext=""
+                         data-inline="true"  data-column-btn-text="Hide/Unhide">
+                            <thead>
+                                <tr>
+                                    <th data-priority=”4”>Charge</th>
+                                    <th data-priority=”4”>Amount</th>
+                                    <th data-priority=”2”>Description</th>
+                                    <th data-priority=”3”>Start date</th>
+                                    <th data-priority=”3”>End date</th>
+                                    <th data-priority=”3”>Status</th>    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- getting the transaction data from the transaction_data variable on the scope and also adding the search filter-->
+                                <tr ng-repeat="transaction in transaction_data | filter:search">
+                                    <!-- transaction charge and the currency -->
+                                    <td>{{transaction.charge.value.amount }}  {{transaction.charge.value.currency}}</td>
+                                    <td>{{transaction.details.value.amount}} {{transaction.details.value.currency}}</td>
+                                    <td>{{transaction.details.description}}</td>
+                                    <td>{{transaction.start_date}}</td>
+                                    <td>{{transaction.end_date}}</td>
+                                    <td>{{transaction.status}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- table end  -->
+                    </div>
+                    </div>
+                
+                    <!-- <div id="three" class="ui-content">
+                        <h1>Third tab contents</h1>
+                        <div>
+                            <button id="openBankData" data-role="none">Get </button>
+                        </div>
+                    </div> -->
+                </div>
+            </div> 
+                <!--app footer  -->
+           
+        </div>
+        <div data-role="footer" id="footer" ></div>
+        <!-- external javascript files -->
+                <!-- bootstrap file -->
+                <script type="text/javascript" src="js/bootstrap-4.2.1/dist/js/bootstrap.min.js"></script>
+                <!-- cordova js file -->
+                <script type="text/javascript" src="cordova.js"></script>
+                       <!-- angular js file -->
+                       <script type="text/javascript" src="js/angular.js"></script>
+                <!-- index js file -->
+                <script type="text/javascript" src="js/index.js"></script>
+         
+                <!-- app controller file -->
+                <script type="text/javascript" src="js/app.js"></script>
+    </body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: http://psd2-api.openbankproject.com/my/logins/direct;  style-src 'self' 'unsafe-inline'; media-src *"> -->
+        <meta http-equiv="Content-Security-Policy" content="default-src *   'unsafe-inline' 'unsafe-eval' ">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        <link rel="stylesheet" type="text/css" href="js/jquery-1.5.0.mobile.min.css" />
+        <script type="text/javascript" crossorigin="anonymous"  src="js/jquery-1.11.1.min.js" ></script>
+        <script type="text/javascript" crossorigin="anonymous"  src="js/jquery-1.5.0.mobile.min.js"></script>
+        <link rel="stylesheet" crossorigin="anonymous"  type="text/css" href="js/bootstrap-4.2.1/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/login.css">
+    </head>
+    <body>
+        <!-- <div data-role="header" style="overflow:hidden;">
+            <h1>I'm a header</h1>
+                <div data-role="navbar" data-iconpos="right">
+                    <ul>
+                        <li><button data-icon="home">One</button></li>
+                        <li><button data-icon="grid" data-theme="b">Two</button></li>
+                        <li><button data-icon="search">Three</button></li>
+                    </ul>
+                </div>
+            </div> -->
+      
+            <div data-role="header">
+                <h1>WELCOME </h1>
+            </div>
+            <div data-role="tabs">
+                <div data-role="navbar">
+                    <ul>
+                    <li><a href="#one" data-theme="a"  class="ui-btn ui-shadow ui-corner-all ui-icon-arrow-l ui-btn-icon-left">one</a></li>
+                    <li><a href="#two" data-theme="a">two</a></li>
+                    <li><a href="#three" data-theme="a">three</a></li>
+                    </ul>
+                </div>
+    <div data-role="main" class="ui-content">
+                <div id="one" class="ui-content">
+                        <h1>First tab contents</h1>
+                    <div id="deviceready">
+
+            <div class="ui-field-contain">
+                    <label for="select-custom-17">Available banks:</label>
+                    <select name="select-custom-17" id="select-custom-17" data-native-menu="false">
+                        <option value="1">The 1st Option</option>
+                        <option value="2">The 2nd Option</option>
+                        <option value="3" selected="selected">The 3rd Option</option>
+                        <option value="4">The 4th Option</option>
+                    </select>
+                </div>
+            <table data-role="table" data-mode="columntoggle" id="account-table" class="ui-responsive table-stripe"  data-column-btn-text="Hide/Unhide">
+                <thead  >
+                    <tr>
+                        <th data-priority=”1”>Name</th><th data-priority=”2”>Account No</th><th data-priority=”3”>Sortcode</th><th data-priority=”4”>Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Smith</td><td>123456</td><td>11100333</td><td>-£100</td>
+                    </tr>
+                    <tr>
+                        <td>Duck</td><td>98765</td><td>11100222</td><td>£5670</td>
+                    </tr>
+                    <tr>
+                        <td>Donald</td><td>567342</td><td>11100111</td><td>£75634</td>
+                    </tr>
+                </tbody>
+            </table>
+                     </div>
+                </div>
+        <div id="two" class="ui-content">
+                <h1>Second tab contents</h1>
+                <div>
+                        <a href="index.html" class="ui-btn ui-shadow ui-corner-all ui-icon-arrow-l ui-btn-icon-left">Left</a>
+                        <a href="index.html" class="ui-btn ui-shadow ui-corner-all ui-icon-arrow-r ui-btn-icon-right">Right</a>
+                        <a href="index.html" class="ui-btn ui-shadow ui-corner-all ui-icon-arrow-u ui-btn-icon-top">Top</a>
+                        <a href="index.html" class="ui-btn ui-shadow ui-corner-all ui-icon-arrow-d ui-btn-icon-bottom">Bottom</a>
+                </div>
+        </div>
+        <div id="three" class="ui-content">
+            <h1>Third tab contents</h1>
+            <div>
+                <button id="openBankData" data-role="none">Get </button>
+            </div>
+    </div>
+    </div>
+</div>   
+        <div data-role="footer"></div>
+   
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </body>
+</html>
